@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400">
+  <!-- Hero banner with pet shop image -->
+  <defs>
+    <linearGradient id="heroGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#D4A574;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B6F47;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="400" fill="url(#heroGradient)"/>
+  
+  <!-- Sky -->
+  <rect width="1200" height="200" fill="#87CEEB"/>
+  
+  <!-- Pet shop building on left -->
+  <rect x="100" y="150" width="300" height="250" fill="#D4A574"/>
+  
+  <!-- Roof -->
+  <polygon points="100,150 250,80 400,150" fill="#5A4A2D"/>
+  
+  <!-- Door -->
+  <rect x="150" y="240" width="80" height="160" fill="#6B5344"/>
+  <circle cx="225" cy="320" r="6" fill="#C9A961"/>
+  
+  <!-- Window -->
+  <rect x="300" y="180" width="80" height="80" fill="#87CEEB"/>
+  
+  <!-- Dog on right side -->
+  <g transform="translate(800, 200)">
+    <!-- Body -->
+    <ellipse cx="0" cy="0" rx="80" ry="60" fill="#A0714F"/>
+    <!-- Head -->
+    <circle cx="0" cy="-70" r="50" fill="#A0714F"/>
+    <!-- Ears -->
+    <ellipse cx="-40" cy="-110" rx="20" ry="40" fill="#8B5A3C"/>
+    <ellipse cx="40" cy="-110" rx="20" ry="40" fill="#8B5A3C"/>
+    <!-- Nose -->
+    <circle cx="0" cy="-60" r="8" fill="#3C3C3C"/>
+    <!-- Eyes -->
+    <circle cx="-20" cy="-80" r="6" fill="#3C3C3C"/>
+    <circle cx="20" cy="-80" r="6" fill="#3C3C3C"/>
+    <!-- Tail -->
+    <path d="M 60 30 Q 120 10 100 -40" stroke="#8B5A3C" stroke-width="30" fill="none" stroke-linecap="round"/>
+    <!-- Legs -->
+    <rect x="-60" y="50" width="25" height="80" fill="#A0714F" rx="12"/>
+    <rect x="-20" y="50" width="25" height="80" fill="#A0714F" rx="12"/>
+    <rect x="20" y="50" width="25" height="80" fill="#A0714F" rx="12"/>
+    <rect x="60" y="50" width="25" height="80" fill="#A0714F" rx="12"/>
+  </g>
+</svg>
