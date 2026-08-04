@@ -270,7 +270,7 @@ npm install
 
 ## 👨‍💻 Author
 
-Your Name - Pet Shop E-Commerce Project
+Induja - Pet Shop E-Commerce Project
 
 ---
 
