@@ -4,6 +4,7 @@ import { productService } from '../services';
 import Loading from '../components/Loading';
 import Notification from '../components/Notification';
 import { useCart } from '../context/CartContext';
+import { formatCurrency, productImageFallback } from '../utils/formatters';
 import '../assets/styles/productdetail.css';
 
 const ProductDetailPage = () => {
@@ -94,10 +95,12 @@ const ProductDetailPage = () => {
         <div className="product-images">
           <div className="main-image">
             <img
-              src={selectedImage}
+              src={selectedImage || productImageFallback(product.name)}
               alt={product.name}
+              loading="eager"
+              decoding="async"
               onError={(e) => {
-                e.target.src = 'https://via.placeholder.com/500x500?text=No+Image';
+                e.target.src = productImageFallback(product.name);
               }}
             />
             {discountPercent > 0 && (
@@ -109,10 +112,15 @@ const ProductDetailPage = () => {
               {product.images.map((img, idx) => (
                 <img
                   key={idx}
-                  src={img}
+                  src={img || productImageFallback(product.name)}
                   alt={`${product.name} ${idx + 1}`}
-                  onClick={() => setSelectedImage(img)}
+                  onClick={() => setSelectedImage(img || productImageFallback(product.name))}
                   className={selectedImage === img ? 'active' : ''}
+                  loading="lazy"
+                  decoding="async"
+                  onError={(e) => {
+                    e.target.src = productImageFallback(product.name);
+                  }}
                 />
               ))}
             </div>
@@ -141,10 +149,10 @@ const ProductDetailPage = () => {
 
           {/* Price */}
           <div className="product-pricing">
-            <span className="current-price">${currentPrice.toFixed(2)}</span>
+            <span className="current-price">{formatCurrency(currentPrice)}</span>
             {discountPercent > 0 && (
               <>
-                <span className="original-price">${product.price.toFixed(2)}</span>
+                <span className="original-price">{formatCurrency(product.price)}</span>
                 <span className="discount-percent">Save {discountPercent}%</span>
               </>
             )}
@@ -247,11 +255,11 @@ const ProductDetailPage = () => {
                 />
                 <h4>{related.name}</h4>
                 <p className="related-price">
-                  ${(
+                  {formatCurrency(
                     related.discountPrice > 0
                       ? related.discountPrice
                       : related.price
-                  ).toFixed(2)}
+                  )}
                 </p>
               </div>
             ))}

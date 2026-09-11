@@ -347,13 +347,19 @@ const CheckoutPage = () => {
             {items.map((item) => (
               <div key={item.productId} className="order-item">
                 <div className="item-info">
-                  <img src={item.image} alt={item.name} />
+                  <img
+                    src={item.image || productImageFallback(item.name)}
+                    alt={item.name}
+                    onError={(e) => {
+                      e.target.src = productImageFallback(item.name);
+                    }}
+                  />
                   <div>
                     <p className="item-name">{item.name}</p>
                     <p className="item-qty">Qty: {item.quantity}</p>
                   </div>
                 </div>
-                <p className="item-total">${(item.price * item.quantity).toFixed(2)}</p>
+                <p className="item-total">{formatCurrency(item.price * item.quantity)}</p>
               </div>
             ))}
           </div>
@@ -362,22 +368,22 @@ const CheckoutPage = () => {
 
           <div className="summary-line">
             <span>Subtotal:</span>
-            <span>${cartTotal.toFixed(2)}</span>
+            <span>{formatCurrency(cartTotal)}</span>
           </div>
           <div className="summary-line">
             <span>Shipping:</span>
-            <span>${shippingCost.toFixed(2)}</span>
+            <span>{formatCurrency(shippingCost)}</span>
           </div>
           <div className="summary-line">
             <span>Tax:</span>
-            <span>${tax.toFixed(2)}</span>
+            <span>{formatCurrency(tax)}</span>
           </div>
 
           <div className="summary-divider"></div>
 
           <div className="summary-line total">
             <span>Total:</span>
-            <span>${total.toFixed(2)}</span>
+            <span>{formatCurrency(total)}</span>
           </div>
         </div>
       </div>

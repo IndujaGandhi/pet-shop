@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { orderService } from '../services';
 import Loading from '../components/Loading';
 import Notification from '../components/Notification';
+import { formatCurrency } from '../utils/formatters';
 import '../assets/styles/orders.css';
 
 const OrdersPage = () => {
@@ -88,7 +89,7 @@ const OrdersPage = () => {
 
               <div className="order-footer">
                 <div className="order-total">
-                  <p>Total: <strong>${order.total.toFixed(2)}</strong></p>
+                  <p>Total: <strong>{formatCurrency(order.total)}</strong></p>
                 </div>
                 <Link to={`/order/${order._id}`} className="view-btn">
                   View Details

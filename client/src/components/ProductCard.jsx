@@ -1,6 +1,7 @@
 import React from 'react';
 import '../assets/styles/productcard.css';
 import { Link } from 'react-router-dom';
+import { formatCurrency, productImageFallback } from '../utils/formatters';
 
 const ProductCard = ({ product, onAddToCart }) => {
   const discountPercent = product.discountPrice
@@ -17,11 +18,13 @@ const ProductCard = ({ product, onAddToCart }) => {
 
       <Link to={`/product/${product._id}`} className="product-image-link">
         <img
-          src={product.image}
+          src={product.image || productImageFallback(product.name)}
           alt={product.name}
           className="product-image"
+          loading="lazy"
+          decoding="async"
           onError={(e) => {
-            e.target.src = 'https://via.placeholder.com/250x250?text=No+Image';
+            e.target.src = productImageFallback(product.name);
           }}
         />
       </Link>
@@ -37,9 +40,9 @@ const ProductCard = ({ product, onAddToCart }) => {
         </div>
 
         <div className="product-price">
-          <span className="current-price">${currentPrice.toFixed(2)}</span>
+          <span className="current-price">{formatCurrency(currentPrice)}</span>
           {discountPercent > 0 && (
-            <span className="original-price">${product.price.toFixed(2)}</span>
+            <span className="original-price">{formatCurrency(product.price)}</span>
           )}
         </div>
 

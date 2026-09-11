@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { orderService } from '../services';
 import Loading from '../components/Loading';
-import Notification from '../components/Notification';
-import '../assets/styles/orderdetail.css';
+import Notification from '../components/Notification';import { formatCurrency, productImageFallback } from '../utils/formatters';import '../assets/styles/orderdetail.css';
 
 const OrderDetailPage = () => {
   const { id } = useParams();
@@ -96,14 +95,21 @@ const OrderDetailPage = () => {
             <div className="items-list">
               {order.items.map((item) => (
                 <div key={item.product._id} className="order-item-detail">
-                  <img src={item.image} alt={item.name} className="item-image" />
+                  <img
+                    src={item.image || productImageFallback(item.name)}
+                    alt={item.name}
+                    className="item-image"
+                    onError={(e) => {
+                      e.target.src = productImageFallback(item.name);
+                    }}
+                  />
                   <div className="item-details">
                     <h4>{item.name}</h4>
-                    <p>Price: ${item.price.toFixed(2)}</p>
+                    <p>Price: {formatCurrency(item.price)}</p>
                     <p>Quantity: {item.quantity}</p>
                   </div>
                   <div className="item-total">
-                    ${(item.price * item.quantity).toFixed(2)}
+                    {formatCurrency(item.price * item.quantity)}
                   </div>
                 </div>
               ))}
@@ -139,20 +145,20 @@ const OrderDetailPage = () => {
             <h2>Order Summary</h2>
             <div className="summary-item">
               <span>Subtotal:</span>
-              <span>${totalAmount.toFixed(2)}</span>
+              <span>{formatCurrency(totalAmount)}</span>
             </div>
             <div className="summary-item">
               <span>Shipping Cost:</span>
-              <span>${order.shippingCost.toFixed(2)}</span>
+              <span>{formatCurrency(order.shippingCost)}</span>
             </div>
             <div className="summary-item">
               <span>Tax:</span>
-              <span>${order.tax.toFixed(2)}</span>
+              <span>{formatCurrency(order.tax)}</span>
             </div>
             <div className="divider"></div>
             <div className="summary-item total">
               <span>Total Amount:</span>
-              <span>${order.total.toFixed(2)}</span>
+              <span>{formatCurrency(order.total)}</span>
             </div>
           </div>
         </div>

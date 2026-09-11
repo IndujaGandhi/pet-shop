@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import Notification from '../components/Notification';
+import { formatCurrency, productImageFallback } from '../utils/formatters';
 import '../assets/styles/cart.css';
 
 const CartPage = () => {
@@ -72,10 +73,17 @@ const CartPage = () => {
               {items.map((item) => (
                 <tr key={item.productId} className="cart-item-row">
                   <td className="product-column">
-                    <img src={item.image} alt={item.name} className="cart-product-image" />
+                    <img
+                      src={item.image || productImageFallback(item.name)}
+                      alt={item.name}
+                      className="cart-product-image"
+                      onError={(e) => {
+                        e.target.src = productImageFallback(item.name);
+                      }}
+                    />
                     <span className="product-name">{item.name}</span>
                   </td>
-                  <td className="price-column">${item.price.toFixed(2)}</td>
+                  <td className="price-column">{formatCurrency(item.price)}</td>
                   <td className="quantity-column">
                     <div className="quantity-control">
                       <button
@@ -99,7 +107,7 @@ const CartPage = () => {
                     </div>
                   </td>
                   <td className="total-column">
-                    ${(item.price * item.quantity).toFixed(2)}
+                    {formatCurrency(item.price * item.quantity)}
                   </td>
                   <td className="action-column">
                     <button
@@ -131,24 +139,24 @@ const CartPage = () => {
 
           <div className="summary-row">
             <span>Subtotal:</span>
-            <span>${cartTotal.toFixed(2)}</span>
+            <span>{formatCurrency(cartTotal)}</span>
           </div>
 
           <div className="summary-row">
             <span>Shipping:</span>
-            <span>${shippingCost.toFixed(2)}</span>
+            <span>{formatCurrency(shippingCost)}</span>
           </div>
 
           <div className="summary-row">
             <span>Tax (10%):</span>
-            <span>${tax.toFixed(2)}</span>
+            <span>{formatCurrency(tax)}</span>
           </div>
 
           <div className="summary-divider"></div>
 
           <div className="summary-row total">
             <span>Total:</span>
-            <span>${total.toFixed(2)}</span>
+            <span>{formatCurrency(total)}</span>
           </div>
 
           <button
